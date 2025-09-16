@@ -120,7 +120,6 @@ if  __name__ == "__main__":
     delete_parser.add_argument("id", type=int, help="Task ID")
 
     # Update command
-    # Update command
     update_parser = subparsers.add_parser("update", help="Update a task")
     update_parser.add_argument("id", type=int, help="Task ID")
     update_parser.add_argument("description", type=str, help="New description")
