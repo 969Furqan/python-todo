@@ -85,7 +85,8 @@ class tasks:
             self.table = []
             self.taskCount = 0
 
-    def storetask(self):
+    def storetask(self, filename = None):
+
         data = [
             {
                 "id":item[0],
@@ -93,61 +94,69 @@ class tasks:
                 "state":item[2],
                 "created at":item[3].isoformat(),
                 "updated at":item[4].isoformat()
-            }
+                }
             for item in self.table
         ]
-        with open(self.filename, "w") as f:
-            json.dump(data, f)
+        if filename is not None:
+            with open(filename, "w") as f:
+                json.dump(data, f)
+        elif filename is None:
+            with open(self.filename, "w") as f:
+                json.dump(data, f)
+
+
+
             
 
 
-if  __name__ == "__main__":
-
-
-    parser = argparse.ArgumentParser(prog="todo", description="A task list application")
-    subparsers = parser.add_subparsers(dest="command", required=True)
-
-    # Add command
-    add_parser = subparsers.add_parser("add", help="Add a new task")
-    add_parser.add_argument("description", type=str, help="Task description")
-
-    # List command
-    list_parser = subparsers.add_parser("list", help="List tasks")
-    list_parser.add_argument("filter", type=str, help = "list tasks")
-
-    # Delete command
-    delete_parser = subparsers.add_parser("delete", help="Delete a task")
-    delete_parser.add_argument("id", type=int, help="Task ID")
-
-    # Update command
-    update_parser = subparsers.add_parser("update", help="Update a task")
-    update_parser.add_argument("id", type=int, help="Task ID")
-    update_parser.add_argument("description", type=str, help="New description")
-
-    # New-status command
-    status_parser = subparsers.add_parser("status", help="Change task status")
-    status_parser.add_argument("id", type=int, help="Task ID")
-    status_parser.add_argument("state", type=str, help="New status")
-
-
-    args = parser.parse_args()
-
-    t = tasks("tasks.json")
-
-    
-        
-    if args.command == "add":
-        t.addtask(args.description)
-    elif args.command == "update":
-        t.updateTask(args.id, description=args.description)
-    elif args.command == "delete":
-        t.deleteTask(args.id)
-    elif args.command == "list":
-        if args.filter is None:
-            t.listTask()
-        else:
-            t.listTask(args.filter)
-    elif args.command == "status":
-        t.statusUpdate(args.id, args.state)
-    else:
-        parser.print_help()
+#if  __name__ == "__main__":
+#
+#
+#    parser = argparse.ArgumentParser(prog="todo", description="A task list application")
+#    subparsers = parser.add_subparsers(dest="command", required=True)
+#
+#    # Add command
+#    add_parser = subparsers.add_parser("add", help="Add a new task")
+#    add_parser.add_argument("description", type=str, help="Task description")
+#
+#    # List command
+#    list_parser = subparsers.add_parser("list", help="List tasks")
+#    list_parser.add_argument("filter", type=str, help = "list tasks")
+#
+#    # Delete command
+#    delete_parser = subparsers.add_parser("delete", help="Delete a task")
+#    delete_parser.add_argument("id", type=int, help="Task ID")
+#
+#    # Update command
+#    update_parser = subparsers.add_parser("update", help="Update a task")
+#    update_parser.add_argument("id", type=int, help="Task ID")
+#    update_parser.add_argument("description", type=str, help="New description")
+#
+#    # New-status command
+#    status_parser = subparsers.add_parser("status", help="Change task status")
+#    status_parser.add_argument("id", type=int, help="Task ID")
+#    status_parser.add_argument("state", type=str, help="New status")
+#
+#
+#    args = parser.parse_args()
+#
+#    t = tasks("tasks.json")
+#
+#    
+#        
+#    if args.command == "add":
+#        t.addtask(args.description)
+#    elif args.command == "update":
+#        t.updateTask(args.id, description=args.description)
+#    elif args.command == "delete":
+#        t.deleteTask(args.id)
+#    elif args.command == "list":
+#        if args.filter is None:
+#            t.listTask()
+#        else:
+#            t.listTask(args.filter)
+#    elif args.command == "status":
+#        t.statusUpdate(args.id, args.state)
+#    else:
+#        parser.print_help()
+#
